@@ -29,7 +29,7 @@ module.exports = function(grunt) {
         var footer  = grunt.template.process(options.footer);
         var target  = this.target;
 
-        var array_unique = function(inputArr) 
+        var array_unique = function(inputArr)
         {
           var key = '',
             tmp_arr2 = {},
@@ -62,14 +62,14 @@ module.exports = function(grunt) {
         var importRecursive = function(filepath, prefix)
         {
             var src = grunt.file.read(filepath);
-            var regexp = /((?![/*]])[^/* ]|^[ \t]*)@import ['"](.*?)['"](?![^*]*?\*\/)/gm;
+            var regexp = /((?![\/*]])[^\/* ]|^[ \t]*)@import ['"](.*?)['"](?![^*]*?\*\/)/gm;
             var matches = [];
-            
+
             while (matches = regexp.exec(src)) {
               var fullmatch = matches[0];
               var importpath = matches[2];
               var p = matches[1];
-              
+
               if(importpath.indexOf('/')!==0)
               {
                   importpath = path.resolve(path.dirname(filepath)+'/'+importpath);
@@ -87,9 +87,9 @@ module.exports = function(grunt) {
                   src = src.split(fullmatch+';').join('');
                   src = src.split(fullmatch).join('');
               }
-            } 
+            }
             if (options.indent && prefix != '') {
-              src = src.split(options.separator).join(options.separator + prefix);
+              src = src.split(options.separator).join(options.separator + (prefix).split(options.separator)[0]);
             }
             return src;
         };
@@ -117,7 +117,7 @@ module.exports = function(grunt) {
           // Write the destination file.
           grunt.file.write(f.dest, src);
           grunt.event.emit('import', 'imported', f.dest, target);
-          
+
           // Print a success message.
           grunt.log.writeln('File "' + f.dest + '" created.');
         });
